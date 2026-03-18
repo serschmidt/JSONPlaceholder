@@ -1,10 +1,21 @@
 // src/App.tsx
 import "./App.css";
+import { Users } from "@/components/users";
+import { Posts } from "@/components/posts";
+import { Comments } from "@/components/comments";
+import { Albums } from "@/components/albums";
+import { Photos } from "@/components/photos";
+import { Todos } from "@/components/todos";
 import { Search } from "lucide-react"; // Icon (npm i lucide-react)
 import { Button } from "./components/ui/button";
 import { Input } from "./components/ui/input";
+import { useState } from "react";
 
 function App() {
+  const [activeView, setActiveView] = useState<
+    "users" | "posts" | "comments" | "albums" | "photos" | "todos" | "none"
+  >("none");
+
   return (
     <div className="app-root">
       {/* Header mit Suchleiste mittig */}
@@ -29,7 +40,11 @@ function App() {
           <nav>
             <ul className="space-y-1 p-2">
               <li>
-                <Button size="icon-lg" variant="ghost" className="w-full justify-start">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => setActiveView("users")}
+                >
                   <img
                     src="/assets/user-16-solid.png"
                     alt="User"
@@ -39,7 +54,11 @@ function App() {
                 </Button>
               </li>
               <li>
-                <Button size="icon-lg" variant="ghost" className="w-full justify-start">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => setActiveView("posts")}
+                >
                   <img
                     src="/assets/post-add-rounded.png"
                     alt="Posts"
@@ -49,7 +68,11 @@ function App() {
                 </Button>
               </li>
               <li>
-                <Button size="icon-lg" variant="ghost" className="w-full justify-start">
+                <Button
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => setActiveView("comments")}
+                >
                   <img
                     src="/assets/mode-comment-outline.png"
                     alt="Comments"
@@ -59,7 +82,12 @@ function App() {
                 </Button>
               </li>
               <li>
-                <Button size="icon-lg" variant="ghost" className="w-full justify-start">
+                <Button
+                  size="icon-lg"
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => setActiveView("albums")}
+                >
                   <img
                     src="/assets/task-alt-rounded.png"
                     alt="Albums"
@@ -69,7 +97,12 @@ function App() {
                 </Button>
               </li>
               <li>
-                <Button size="icon-lg" variant="ghost" className="w-full justify-start">
+                <Button
+                  size="icon-lg"
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => setActiveView("photos")}
+                >
                   <img
                     src="/assets/photo-solid.png"
                     alt="Photos"
@@ -79,7 +112,12 @@ function App() {
                 </Button>
               </li>
               <li>
-                <Button size="icon-lg" variant="ghost" className="w-full justify-start">
+                <Button
+                  size="icon-lg"
+                  variant="ghost"
+                  className="w-full justify-start"
+                  onClick={() => setActiveView("todos")}
+                >
                   <img
                     src="/assets/task-alt-rounded.png"
                     alt="ToDos"
@@ -93,14 +131,24 @@ function App() {
         </aside>
 
         <main className="app-main">
-          <h2>Hauptinhalt</h2>
-          <p>Hier steht dein Content.</p>
+          {activeView === "users" && <Users />}
+          {activeView === "posts" && <Posts />}
+          {activeView === "comments" && <Comments />}
+          {activeView === "albums" && <Albums />}
+          {activeView === "photos" && <Photos />}
+          {activeView === "todos" && <Todos />}
+          {activeView === "none" && (
+            <>
+              <h2>JSONPlaceholder</h2>
+              <p>Bitte links eine Kategorie auswählen.</p>
+            </>
+          )}
         </main>
-      </div>
 
-      <footer className="app-footer">
-        <small>© 2026 Meine App</small>
-      </footer>
+        <footer className="app-footer">
+          <small>© 2026 Meine App</small>
+        </footer>
+      </div>
     </div>
   );
 }
